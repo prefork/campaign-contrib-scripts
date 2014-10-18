@@ -5,50 +5,28 @@ all:
 	echo "Please choose a target."
 
 api: json
+	mkdir -p api/candidates
+	mkdir -p api/contributors
+	ruby scripts/generate_contributor_api_entities.rb
+	ruby scripts/generate_candidate_api_entities.rb
 
-json: data/json/contributors.json data/json/candidates.json data/filtered_contributors
+json: data/json/contributors.json data/json/candidates.json data/json/committees.json
 
-data/filtered_contributors: data/json/individual_contributors.json data/json/business_contributors.json data/json/corporation_contributors.json data/json/candidate_committee_contributors.json data/json/pac_contributors.json data/json/ballot_question_contributors.json data/json/political_party_contributors.json
-
-data/json/individual_contributors.json: data/json/contributors.json
+data/json/committees.json:
 	mkdir -p data/json
-	bundle exec ruby scripts/filter_contributors.rb individual
-
-data/json/business_contributors.json: data/json/contributors.json
-	mkdir -p data/json
-	bundle exec ruby scripts/filter_contributors.rb business
-
-data/json/corporation_contributors.json: data/json/contributors.json
-	mkdir -p data/json
-	bundle exec ruby scripts/filter_contributors.rb corporation
-
-data/json/candidate_committee_contributors.json: data/json/contributors.json
-	mkdir -p data/json
-	bundle exec ruby scripts/filter_contributors.rb candidate_committee
-
-data/json/pac_contributors.json: data/json/contributors.json
-	mkdir -p data/json
-	bundle exec ruby scripts/filter_contributors.rb pac
-
-data/json/ballot_question_contributors.json: data/json/contributors.json
-	mkdir -p data/json
-	bundle exec ruby scripts/filter_contributors.rb ballot_question
-
-data/json/political_party_contributors.json: data/json/contributors.json
-	mkdir -p data/json
-	bundle exec ruby scripts/filter_contributors.rb political_party
+	ruby scripts/generate_committee_json.rb
 
 data/json/contributors.json:
 	mkdir -p data/json
-	bundle exec ruby scripts/generate_contributor_json.rb
+	ruby scripts/generate_contributor_json.rb
 
 data/json/candidates.json:
 	mkdir -p data/json
-	bundle exec ruby scripts/generate_candidate_json.rb
+	ruby scripts/generate_candidate_json.rb
 
 csv: data/src
 	mkdir -p data/csv
-	bundle exec ruby scripts/normalize_csv_files.rb
+	ruby scripts/normalize_csv_files.rb
 
 data/src:
 	mkdir -p data

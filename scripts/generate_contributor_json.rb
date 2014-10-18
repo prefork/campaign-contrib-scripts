@@ -21,6 +21,8 @@ def new_contributor(row)
   doc[:last_name] = row['Contributor Last Name']
   doc[:organization_name] = row['Contributor Organization Name']
   doc[:zip_code] = row['Contributor Zipcode']
+  doc[:state] = row['Contributor State']
+  doc[:city] = row['Contributor City']
   doc[:type] = contributor_type(row['Type of Contributor'])
   doc[:contributions] = []
   return doc
