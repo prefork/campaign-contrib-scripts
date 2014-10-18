@@ -6,7 +6,11 @@ all:
 
 api: source_data
 
-source_data: data/json
+source_data: data/json/contributors.json data/json/candidates.json
+
+data/json/contributors.json: data/csv
+	mkdir -p data/json
+	bundle exec ruby scripts/generate_contributor_json.rb
 
 data/json/candidates.json: data/csv
 	mkdir -p data/json
