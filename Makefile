@@ -36,4 +36,4 @@ data/src:
 	rm nadc.zip
 
 clean:
-	rm -rf data nadc.zip
+	rm -rf data nadc.zip api
